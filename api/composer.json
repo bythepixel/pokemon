@@ -1,11 +1,9 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
-    "license": "MIT",
+    "name": "pokemon/api",
+    "description": "The BEST API evar.",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7",
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "~2.2"
     },
@@ -22,11 +20,6 @@
         "classmap": [
             "tests/",
             "database/"
-        ]
-    },
-    "scripts": {
-        "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
         ]
     }
 }
