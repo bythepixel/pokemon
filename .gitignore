@@ -1,0 +1,6 @@
+/vendor
+vagrant.yml
+.env
+.vagrant
+*.log
+.idea
