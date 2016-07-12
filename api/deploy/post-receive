@@ -1,7 +1,0 @@
-#!/bin/sh
-
-echo 'POST RECEIVE API HOOK'
-
-cd api
-
-# do things!
