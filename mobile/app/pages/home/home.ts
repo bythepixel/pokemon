@@ -30,7 +30,17 @@ export class HomePage {
 			this.geolocationError(positionError);
 		});
 
-		this.pokemonService.findAll().subscribe(data => {console.log(data);})
+		this.pokemonService.findAll().subscribe(data => {
+			data = JSON.parse(data);
+			console.log(data);
+			for(var pokemon in data) {
+				data[pokemon].sightings.forEach(sighting => {
+					this.heatmapData = this.heatmapData.concat([
+						  new google.maps.LatLng(sighting.latitude,sighting.longitude),
+					])
+				});
+			}
+		});
 
 	}
 

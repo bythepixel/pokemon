@@ -12,11 +12,11 @@ export class PokemonService {
 												        "sightings": [
 												            {
 												                "latitude": 39.8677588,
-												                "longitude": -105.0668993
+												                "longitude": -105.067
 												            },
 												            {
 												                "latitude": 39.86777,
-												                "longitude": -105.0668993
+												                "longitude": -105.067
 												            }
 												        ]
 												    }
