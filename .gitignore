@@ -4,3 +4,11 @@ vagrant.yml
 .vagrant
 *.log
 .idea
+
+mobile/node_modules/
+mobile/www/build/
+mobile/platforms/
+mobile/plugins/
+mobile/*.swp
+mobile/.DS_Store
+mobile/Thumbs.db
