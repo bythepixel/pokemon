@@ -11,6 +11,7 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
-});
+$app->get('pokemon', 'PokemonController@index');
+
+$app->get('sightings', 'SightingController@index');
+$app->post('sightings', 'SightingController@store');
