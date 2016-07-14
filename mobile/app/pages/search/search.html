@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+			<ion-icon menuToggle name="menu"></ion-icon>
+			Search
+		</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-searchbar [(ngModel)]="searchQuery" (keypress)="getItems($event)">
+	</ion-searchbar>
+	<ion-list>
+	  <ion-item *ngFor="let pokemon of pokemonsFiltered">
+	    {{ pokemon }}
+	  </ion-item>
+	</ion-list>
+</ion-content>

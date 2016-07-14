@@ -1,0 +1,17 @@
+<ion-menu [content]="content">
+	<ion-toolbar>
+		<ion-title>Pokemon Go Companion</ion-title>
+	</ion-toolbar>
+	<ion-content>
+		<ion-list>
+			<button ion-item (click)="openPage(HomePage)">
+				Map
+			</button>
+			<button ion-item (click)="openPage(SearchPage)">
+				Search
+			</button>
+		</ion-list>
+	</ion-content>
+</ion-menu>
+
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>

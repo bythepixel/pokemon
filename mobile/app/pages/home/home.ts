@@ -1,6 +1,6 @@
 import {Component, AfterViewChecked} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {PokemonService} from '../../services/pokemon-service';
+import {SightingsService} from '../../services/sightings-service';
 
 declare var google: any;
 
@@ -12,15 +12,12 @@ export class HomePage {
 	map: any;
 	heatmapData: any;
 	heatmap: any;
-	pokemonService: PokemonService;
 
-  constructor(private navController: NavController, pokemonService: PokemonService) {
+  constructor(private navController: NavController, private sightingsService: SightingsService) {
 		this.heatmapData = [
 		  new google.maps.LatLng(39.8677588,-105.0668993),
 		  new google.maps.LatLng(39.86777,-105.0668993),
 		];
-
-		this.pokemonService = pokemonService;
   }
 
 	onPageDidEnter() {
@@ -30,9 +27,8 @@ export class HomePage {
 			this.geolocationError(positionError);
 		});
 
-		this.pokemonService.findAll().subscribe(data => {
+		this.sightingsService.findAll().subscribe(data => {
 			data = JSON.parse(data);
-			console.log(data);
 			for(var pokemon in data) {
 				data[pokemon].sightings.forEach(sighting => {
 					this.heatmapData = this.heatmapData.concat([

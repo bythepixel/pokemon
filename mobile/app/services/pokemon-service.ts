@@ -7,20 +7,18 @@ export class PokemonService {
     findAll() {
 
         return Observable.create(observer => {
-            observer.next(`{
-												    "4": {
-												        "sightings": [
-												            {
-												                "latitude": 39.8677588,
-												                "longitude": -105.067
-												            },
-												            {
-												                "latitude": 39.86777,
-												                "longitude": -105.067
-												            }
-												        ]
-												    }
-												}`);
+            observer.next(`[
+    {
+        "name": "Bulbasaur",
+        "rarity": "common",
+        "number": "1"
+    },
+    {
+        "name": "Ivysaur",
+        "rarity": "common",
+        "number": "2"
+    }
+]`);
             observer.complete();
         });
 
