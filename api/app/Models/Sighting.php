@@ -10,6 +10,11 @@ class Sighting extends Model
         'location'
     ];
 
+    public function pokemon()
+    {
+        return $this->belongsTo(Pokemon::class);
+    }
+
     public function setLocationAttribute($value) {
         $this->attributes['location'] = DB::raw("POINT($value)");
     }
