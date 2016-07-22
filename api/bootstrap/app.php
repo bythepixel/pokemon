@@ -24,6 +24,7 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withFacades();
+
 $app->withEloquent();
 
 /*
@@ -62,9 +63,9 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'jwt.api.auth' => App\Http\Middleware\GetUserFromToken::class,
+ ]);
 
 $app->middleware([
     Barryvdh\Cors\HandleCors::class
@@ -85,11 +86,11 @@ $app->middleware([
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
-$app->register(Barryvdh\Cors\LumenServiceProvider::class);
 $app->configure('cors');
+$app->register(Barryvdh\Cors\LumenServiceProvider::class);
 
-$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->configure('jwt');
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
 if (env('APP_DEBUG')) {
     $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);

@@ -11,8 +11,11 @@
 |
 */
 
-
-  $app->get('api', 'ApiController@index');
+$app->group(['middleware' => 'jwt.api.auth', 'namespace' => 'App\Http\Controllers'], function() use ($app) {
+	$app->get('api', 'ApiController@index');
 	$app->get('pokemon', ['uses' => 'PokemonController@index']);
 	$app->get('sightings', ['uses' => 'SightingController@index']);
 	$app->post('sightings', ['uses' => 'SightingController@store']);
+});
+
+$app->get('login', 'AuthenticationController@login');
