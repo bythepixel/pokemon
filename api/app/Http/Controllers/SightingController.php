@@ -1,21 +1,29 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Sighting;
+use App\Repositories\PokemonRepository;
+use App\Repositories\SightingsRepository;
 use Illuminate\Http\Request;
 use Pokemon\SightingsRequest;
 
 class SightingController extends Controller
 {
-    public function index(Request $request)
+    public function index(
+        Request $request,
+        SightingsRepository $sightingsRepository,
+        PokemonRepository $pokemonRepository
+    )
     {
         $longitude = $request->get('longitude');
         $latitude = $request->get('latitude');
         $distance = $request->get('distance');
+        $pokemonId = $request->get('pokemon_id');
 
-        $sightingsRequest = new SightingsRequest($longitude, $latitude, $distance);
+        $pokemon = $pokemonId ? $pokemonRepository->find($pokemonId) : null;
 
-        $sightings = Sighting::whereRaw($sightingsRequest->getWithinSql())->orderByRaw("
-            ST_Distance(location,GeomFromText('POINT($latitude $longitude)'))")->with('pokemon')->get();
+        $sightingsRequest = new SightingsRequest($longitude, $latitude, $distance, $pokemon);
+
+        $sightings = $sightingsRepository->findBySightingsRequest($sightingsRequest);
 
         return response()->json($sightings);
     }

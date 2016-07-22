@@ -1,12 +1,11 @@
 <?php namespace App\Http\Controllers;
 
-
-use App\Models\Pokemon;
+use App\Repositories\PokemonRepository;
 
 class PokemonController extends Controller
 {
-    public function index()
+    public function index(PokemonRepository $pokemonRepository)
     {
-        return response()->json(Pokemon::all());
+        return response()->json($pokemonRepository->all());
     }
 }

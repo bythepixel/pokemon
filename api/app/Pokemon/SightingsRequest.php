@@ -1,5 +1,7 @@
 <?php namespace Pokemon;
 
+use App\Models\Pokemon;
+
 class SightingsRequest
 {
     private $longitude;
@@ -8,11 +10,60 @@ class SightingsRequest
 
     private $boxDistance;
 
-    public function __construct($longitude, $latitude, $boxDistance)
+    public function __construct($longitude, $latitude, $boxDistance, Pokemon $pokemon = null)
     {
         $this->longitude = $longitude;
         $this->latitude = $latitude;
         $this->boxDistance = $boxDistance;
+        $this->pokemon = $pokemon;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @param mixed $longitude
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @param mixed $latitude
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+    }
+
+    /**
+     * @return Pokemon
+     */
+    public function getPokemon()
+    {
+        return $this->pokemon;
+    }
+
+    /**
+     * @param Pokemon $pokemon
+     */
+    public function setPokemon($pokemon)
+    {
+        $this->pokemon = $pokemon;
     }
 
     public function getWithinSql()
