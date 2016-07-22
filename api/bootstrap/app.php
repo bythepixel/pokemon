@@ -66,8 +66,8 @@ $app->singleton(
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
-$app->routeMiddleware([
-	'cors' => \App\Http\Middleware\Cors::class,
+$app->middleware([
+    Barryvdh\Cors\HandleCors::class
 ]);
 
 /*
@@ -85,11 +85,7 @@ $app->routeMiddleware([
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 //$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
-
-if (env('APP_DEBUG')) {
-    $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
-    $app->configure('debugbar');
-}
+$app->register(Barryvdh\Cors\LumenServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +97,12 @@ if (env('APP_DEBUG')) {
 | can respond to, as well as the controllers that may handle them.
 |
 */
+if (env('APP_DEBUG')) {
+    $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
+    $app->configure('debugbar');
+}
+
+$app->configure('cors');
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';

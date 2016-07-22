@@ -1,23 +1,26 @@
 import {Component, AfterViewChecked} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {PokemonService} from '../../services/pokemon-service';
+import {Pokemon} from '../../entities/pokemon';
 
 @Component({
   templateUrl: 'build/pages/search/search.html'
 })
 export class SearchPage {
 
-	pokemons = []
+	pokemons: Pokemon[]
 	searchQuery: string
 	pokemonsFiltered = []
 
   constructor(private navController: NavController, private pokemonService:PokemonService) {
     this.searchQuery = '';
+		this.pokemons = [];
 
 		this.pokemonService.findAll().subscribe((pokemons) => {
-			pokemons = JSON.parse(pokemons);
-			pokemons.forEach((pokemon) => {
-				this.pokemons.push(pokemon['name']);
+			let pokemonsObject = JSON.parse(pokemons);
+			pokemonsObject.forEach((pokemon) => {
+				let newPokemon = new Pokemon(pokemon['id'], pokemon['name'], pokemon['rarity'], pokemon['number']);
+				this.pokemons.push(newPokemon);
 			});
 		});
 
@@ -42,4 +45,8 @@ export class SearchPage {
       });
     }
   }
+
+	selectPokemon(pokemon: Pokemon) {
+		console.log(pokemon.id, pokemon.name);
+	}
 }

@@ -11,9 +11,8 @@
 |
 */
 
-$app->get('pokemon', ['middleware' => 'cors', 'uses' => 'PokemonController@index']);
-$app->get('sightings', ['middleware' => 'cors', 'uses' => 'SightingController@index']);
-$app->post('sightings', ['middleware' => 'cors', 'uses' => 'SightingController@store']);
 
-$app->get('sightings', 'SightingController@index');
-$app->post('sightings', 'SightingController@store');
+  $app->get('api', 'ApiController@index');
+	$app->get('pokemon', ['uses' => 'PokemonController@index']);
+	$app->get('sightings', ['uses' => 'SightingController@index']);
+	$app->post('sightings', ['uses' => 'SightingController@store']);

@@ -1,26 +1,21 @@
 import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http'
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class PokemonService {
 
+	private data;
+
+	constructor(public http: Http) {
+
+	}
+
     findAll() {
 
-        return Observable.create(observer => {
-            observer.next(`[
-    {
-        "name": "Bulbasaur",
-        "rarity": "common",
-        "number": "1"
-    },
-    {
-        "name": "Ivysaur",
-        "rarity": "common",
-        "number": "2"
-    }
-]`);
-            observer.complete();
-        });
+			return this.http.get('http://api.pokemon.local/pokemon')
+			  .map(response => response.text());
 
     }
 
