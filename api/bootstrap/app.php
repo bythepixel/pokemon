@@ -84,6 +84,12 @@ $app->routeMiddleware([
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+//$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
+if (env('APP_DEBUG')) {
+    $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
+    $app->configure('debugbar');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -95,11 +101,6 @@ $app->routeMiddleware([
 | can respond to, as well as the controllers that may handle them.
 |
 */
-
-if (env('APP_DEBUG')) {
-    $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
-    $app->configure('debugbar');
-}
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';

@@ -2,10 +2,12 @@
     "name": "pokemon/api",
     "description": "The BEST API evar.",
     "type": "project",
+    "minimum-stability": "alpha",
     "require": {
         "php": ">=7",
         "laravel/lumen-framework": "5.2.*",
-        "vlucas/phpdotenv": "~2.2"
+        "vlucas/phpdotenv": "~2.2",
+        "tymon/jwt-auth": "^1.0.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
