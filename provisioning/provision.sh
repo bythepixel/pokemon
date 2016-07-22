@@ -7,8 +7,8 @@ ENVIRONMENT="local"
 API_DOMAIN="api.pokemon.local"
 
 echo "Update ubuntu"
-sudo apt-get update -y
-sudo apt-get upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
 echo "Install os dependencies"
 sudo apt-get install nginx php php-dom php-zip php-mysql php-curl php-mbstring php-gd git dos2unix -y
