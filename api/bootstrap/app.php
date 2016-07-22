@@ -84,8 +84,17 @@ $app->middleware([
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-//$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
 $app->register(Barryvdh\Cors\LumenServiceProvider::class);
+$app->configure('cors');
+
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->configure('jwt');
+
+if (env('APP_DEBUG')) {
+    $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
+    $app->configure('debugbar');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -101,8 +110,6 @@ if (env('APP_DEBUG')) {
     $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
     $app->configure('debugbar');
 }
-
-$app->configure('cors');
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
