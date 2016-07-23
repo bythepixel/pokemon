@@ -13,6 +13,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "geerlingguy/ubuntu1604"
 
   config.vm.network "private_network", ip: "192.168.13.37"
+	config.vm.network "forwarded_port", guest: 80, host: 8080
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"

@@ -8,15 +8,11 @@ export class PokemonService {
 
 	private data;
 
-	constructor(public http: Http) {
+	constructor(public http: Http) {}
 
+	findAll() {
+		return this.http.get('http://192.168.1.8:8080/pokemon')
+			.map(response => response.text());
 	}
-
-    findAll() {
-
-			return this.http.get('http://api.pokemon.local/pokemon')
-			  .map(response => response.text());
-
-    }
 
 }

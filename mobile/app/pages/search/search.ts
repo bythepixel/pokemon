@@ -1,18 +1,21 @@
-import {Component, AfterViewChecked} from '@angular/core';
+import {Component, Output, AfterViewChecked, EventEmitter} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {PokemonService} from '../../services/pokemon-service';
+import {PokemonStateService} from '../../services/pokemon-state-service'
 import {Pokemon} from '../../entities/pokemon';
+import {HomePage} from '../home/home';
 
 @Component({
   templateUrl: 'build/pages/search/search.html'
 })
 export class SearchPage {
 
+	@Output() activePokemon = new EventEmitter();
 	pokemons: Pokemon[]
 	searchQuery: string
 	pokemonsFiltered = []
 
-  constructor(private navController: NavController, private pokemonService:PokemonService) {
+  constructor(private navController: NavController, private pokemonService:PokemonService, private pokemonStateService:PokemonStateService) {
     this.searchQuery = '';
 		this.pokemons = [];
 
@@ -47,6 +50,7 @@ export class SearchPage {
   }
 
 	selectPokemon(pokemon: Pokemon) {
-		console.log(pokemon.id, pokemon.name);
+		this.pokemonStateService.setActive(pokemon);
+		this.navController.push(HomePage);
 	}
 }
