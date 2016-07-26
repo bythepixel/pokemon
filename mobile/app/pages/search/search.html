@@ -11,8 +11,8 @@
 	<ion-searchbar [(ngModel)]="searchQuery" (keypress)="getItems($event)">
 	</ion-searchbar>
 	<ion-list>
-	  <ion-item *ngFor="let pokemon of pokemonsFiltered" (click)="selectPokemon(pokemon)">
-	    {{ pokemon.name }}
-	  </ion-item>
+	  <button (click)="selectPokemon(pokemon)" ion-item *ngFor="let pokemon of pokemonsFiltered">
+			{{ pokemon.name }}
+	  </button>
 	</ion-list>
 </ion-content>

@@ -29,7 +29,7 @@ export class HomePage {
 			(pokemon) => console.log(pokemon)
 		);
 
-		this.bounds.debounceTime(2000)
+		this.bounds.debounceTime(750)
 			.subscribe( results => {
 				this.findPokemon();
 			});
@@ -51,8 +51,18 @@ export class HomePage {
 	geolocationSuccess(position) {
 		let latitude = position.coords.latitude
 		let longitude = position.coords.longitude
+		let zoom = 20
 
-		this.initMap(latitude, longitude);
+		// Check to see if the geolocation state has already been determined
+		if(this.sightingsService.getState().latitude != null
+			&& this.sightingsService.getState().longitude != null
+		  && this.sightingsService.getState().zoom != null ) {
+			latitude = this.sightingsService.getState().latitude
+			longitude = this.sightingsService.getState().longitude
+			zoom = this.sightingsService.getState().zoom
+		}
+
+		this.initMap(latitude, longitude, zoom);
 
 		this.findPokemon();
 	}
@@ -62,25 +72,36 @@ export class HomePage {
 	}
 
 	findPokemon() {
-		this.newMap(this.map.getCenter().lat(), this.map.getCenter().lng(), this.map.getZoom());
-
-		this.sightingsService.findPokemonInView(this.map.getCenter().lat(), this.map.getCenter().lng(), this.map.getZoom(), this.pokemonStateService.activePokemon.getValue()).subscribe( data => {
+		// this.newMap(this.map.getCenter().lat(), this.map.getCenter().lng(), this.map.getZoom());
+		console.log(this.map.getCenter().lat())
+		this.sightingsService.setState(this.map.getCenter().lat(), this.map.getCenter().lng(), this.map.getZoom())
+		this.sightingsService.findPokemonInView(this.pokemonStateService.activePokemon.getValue()).subscribe( data => {
 			let pokemons = JSON.parse(data);
+
+			// Ensure heatmap data is empty
 			this.heatmapData = [];
+
 			for(var pokemon in pokemons) {
 				let latitudeLongitude = pokemons[pokemon].location.match(/POINT\(((?:-?)\d.+\.\d.+) ((?:-?)\d.+\.\d.+)\)/);
 				let latitude = latitudeLongitude[1]
 				let longitude = latitudeLongitude[2]
+
+				// Setup the heatmap data
 				this.heatmapData = this.heatmapData.concat([
 						new google.maps.LatLng(longitude, latitude),
 				]);
-				}
+			}
 
-				this.heatmap = new google.maps.visualization.HeatmapLayer({
-					data: this.heatmapData
-				});
+			// Clear the heatmap points
+			this.heatmap.setMap(null);
 
-				this.heatmap.setMap(this.map);
+			// Setup a new heatmap
+			this.heatmap = new google.maps.visualization.HeatmapLayer({
+				data: this.heatmapData
+			});
+
+			// Apply the map to the heatmap
+			this.heatmap.setMap(this.map);
 		});
 
 	}
@@ -106,12 +127,10 @@ export class HomePage {
 		  mapTypeId: google.maps.MapTypeId.ROADMAP
 		});
 
-		setTimeout(() => {
-			this.map.addListener('bounds_changed', function() {
-				console.log('bounds');
+		this.map.addListener('bounds_changed', function() {
+			console.log('bounds');
 
-				app.bounds.next('new')
-			})
-		}, 2000);
+			app.bounds.next('new')
+		});
 	}
 }
