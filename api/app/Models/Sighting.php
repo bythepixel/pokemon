@@ -10,6 +10,10 @@ class Sighting extends Model
         'location'
     ];
 
+    protected $appends = ['latitude', 'longitude'];
+
+    private $longitudeLatitudeRegex = '/^POINT\((\-?\d+(\.\d+)?) \s*(\-?\d+(\.\d+)?)\)$/';
+
     public function pokemon()
     {
         return $this->belongsTo(Pokemon::class);
@@ -24,5 +28,19 @@ class Sighting extends Model
         $raw = ' astext(location) as location ';
 
         return parent::newQuery($excludeDeleted)->addSelect('*',DB::raw($raw));
+    }
+
+    public function getLatitudeAttribute()
+    {
+        preg_match($this->longitudeLatitudeRegex, $this->location, $matches);
+
+        return $matches[3];
+    }
+
+    public function getLongitudeAttribute()
+    {
+        preg_match($this->longitudeLatitudeRegex, $this->location, $matches);
+
+        return $matches[1];
     }
 }

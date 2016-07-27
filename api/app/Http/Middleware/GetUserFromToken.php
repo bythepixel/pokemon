@@ -15,7 +15,7 @@ class GetUserFromToken
      */
     public function handle($request, Closure $next)
     {
-        JWTAuth::parseToken()->authenticate();
+        // JWTAuth::parseToken()->authenticate();
 
         return $next($request);
     }
