@@ -72,8 +72,6 @@ export class HomePage {
 	}
 
 	findPokemon() {
-		// this.newMap(this.map.getCenter().lat(), this.map.getCenter().lng(), this.map.getZoom());
-		console.log(this.map.getCenter().lat())
 		this.sightingsService.setState(this.map.getCenter().lat(), this.map.getCenter().lng(), this.map.getZoom())
 		this.sightingsService.findPokemonInView(this.pokemonStateService.activePokemon.getValue()).subscribe( data => {
 			let pokemons = JSON.parse(data);
@@ -120,6 +118,7 @@ export class HomePage {
 	newMap(latitude, longitude, zoom) {
 
 		let app = this;
+		let newMap = true;
 
 		this.map = new google.maps.Map(document.getElementById('map'), {
 		  center: new google.maps.LatLng(latitude, longitude),
@@ -128,9 +127,13 @@ export class HomePage {
 		});
 
 		this.map.addListener('bounds_changed', function() {
-			console.log('bounds');
+			// Ensure listeners only fire if the map is not a new instance
+			if(!newMap) {
+				app.bounds.next('new');
+			}
 
-			app.bounds.next('new')
+			// Toggle the map instance bool
+			newMap = false;
 		});
 	}
 }

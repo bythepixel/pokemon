@@ -4,10 +4,11 @@ import {Http, Headers} from '@angular/http'
 import 'rxjs/add/operator/map';
 import {Pokemon} from "../entities/pokemon";
 import 'rxjs/add/operator/debounceTime';
+import {EnvironmentService} from './environment-service';
 
 @Injectable()
 export class SightingsService {
-	constructor(public http: Http) {}
+	constructor(public http: Http, public environmentService: EnvironmentService) {}
 
 	private latitude: number
 	private longitude: number
@@ -33,7 +34,7 @@ export class SightingsService {
 	}
 
 	findPokemonInView(pokemon:Pokemon) {
-		return this.http.get("http://192.168.1.8:8080/sightings?latitude=" + this.latitude + "&longitude=" + this.longitude + "&distance=" + this.distance + "&pokemon_id=" + pokemon.id)
+		return this.http.get(this.environmentService.API_IP + "/sightings?latitude=" + this.latitude + "&longitude=" + this.longitude + "&distance=" + this.distance + "&pokemon_id=" + pokemon.id)
 			.map(response => response.text());
 	}
 

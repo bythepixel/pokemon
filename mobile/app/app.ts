@@ -8,6 +8,7 @@ import {PokemonService} from './services/pokemon-service';
 import {PokemonStateService} from './services/pokemon-state-service';
 import {Pokemon} from './entities/pokemon';
 import {Subscription} from 'rxjs/Subscription';
+import {EnvironmentService} from './services/environment-service';
 
 @Component({
   templateUrl: 'build/app.html',
@@ -45,4 +46,4 @@ export class MyApp {
 	}
 }
 
-ionicBootstrap(MyApp, [PokemonStateService])
+ionicBootstrap(MyApp, [PokemonStateService, EnvironmentService])

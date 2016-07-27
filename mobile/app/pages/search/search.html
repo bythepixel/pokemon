@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-	<ion-searchbar [(ngModel)]="searchQuery" (keypress)="getItems($event)">
+	<ion-searchbar (ionInput)="getItems($event)">
 	</ion-searchbar>
 	<ion-list>
 	  <button (click)="selectPokemon(pokemon)" ion-item *ngFor="let pokemon of pokemonsFiltered">
