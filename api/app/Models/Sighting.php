@@ -14,6 +14,8 @@ class Sighting extends Model
 
     private $longitudeLatitudeRegex = '/^POINT\((\-?\d+(\.\d+)?) \s*(\-?\d+(\.\d+)?)\)$/';
 
+    private $explodedLocation = null;
+
     public function pokemon()
     {
         return $this->belongsTo(Pokemon::class);
@@ -32,15 +34,20 @@ class Sighting extends Model
 
     public function getLatitudeAttribute()
     {
-        preg_match($this->longitudeLatitudeRegex, $this->location, $matches);
-
-        return $matches[3];
+        return $this->getExplodeLocation()[3];
     }
 
     public function getLongitudeAttribute()
     {
-        preg_match($this->longitudeLatitudeRegex, $this->location, $matches);
+        return $this->getExplodeLocation()[1];
+    }
+    
+    public function getExplodeLocation()
+    {
+        if($this->explodedLocation === null) {
+            preg_match($this->longitudeLatitudeRegex, $this->location, $this->explodedLocation);
+        }
 
-        return $matches[1];
+        return $this->explodedLocation;
     }
 }
